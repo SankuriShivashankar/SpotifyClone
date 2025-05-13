@@ -153,6 +153,28 @@ async function main() {
     }
   });
 
+  // Next and Previous button functionality
+  const nextBtn = document.querySelector(".next");
+  const prevBtn = document.querySelector(".prev");
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      if (!songs || songs.length === 0) return;
+      let currentIndex = songs.findIndex(song => decodeURIComponent(song) === decodeURIComponent(currentsong.src.split("/").pop()));
+      let nextIndex = (currentIndex + 1) % songs.length;
+      playmusic(songs[nextIndex]);
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      if (!songs || songs.length === 0) return;
+      let currentIndex = songs.findIndex(song => decodeURIComponent(song) === decodeURIComponent(currentsong.src.split("/").pop()));
+      let prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+      playmusic(songs[prevIndex]);
+    });
+  }
+
   currentsong.addEventListener("timeupdate", () => {
     const CurrentTime = formattime(currentsong.currentTime);
     const totalDuration = formattime(currentsong.duration);
